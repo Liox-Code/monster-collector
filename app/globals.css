@@ -1,26 +1,55 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  --color-primary-50: #f3fcf9;
+  --color-primary-100: #e7f8f2;
+  --color-primary-200: #c3eee0;
+  --color-primary-300: #9fe3cd;
+  --color-primary-400: #58cea7;
+  --color-primary-500: #10b981;
+  --color-primary-600: #0ea774;
+  --color-primary-700: #0a6f4d;
+  --color-primary-800: #07533a;
+  --color-primary-900: #053827;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-secondary-50: #f5f9ff;
+  --color-secondary-100: #ebf3fe;
+  --color-secondary-200: #cee0fd;
+  --color-secondary-300: #b1cdfb;
+  --color-secondary-400: #76a8f9;
+  --color-secondary-500: #3b82f6;
+  --color-secondary-600: #3575dd;
+  --color-secondary-700: #234e94;
+  --color-secondary-800: #1b3b6f;
+  --color-secondary-900: #12274a;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+  --color-tertiary-50: #fef6f6;
+  --color-tertiary-100: #fdecec;
+  --color-tertiary-200: #fbd0d0;
+  --color-tertiary-300: #f9b4b4;
+  --color-tertiary-400: #f47c7c;
+  --color-tertiary-500: #ef4444;
+  --color-tertiary-600: #d73d3d;
+  --color-tertiary-700: #8f2929;
+  --color-tertiary-800: #6c1f1f;
+  --color-tertiary-900: #481414;
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  --color-neutral-50: #f8f8f8;
+  --color-neutral-100: #f1f1f2;
+  --color-neutral-200: #dcdcde;
+  --color-neutral-300: #c6c6ca;
+  --color-neutral-400: #9c9ca2;
+  --color-neutral-500: #71717a;
+  --color-neutral-600: #66666e;
+  --color-neutral-700: #444449;
+  --color-neutral-800: #333337;
+  --color-neutral-900: #222225;
+
+  --color-background: #12131a;
+  --color-surface-1: #1a1b22;
+  --color-surface-2: #1e1f26;
+  --color-footer: #0d0e15;
+
+  --font-sans: var(--font-geist);
+  --font-mono: var(--font-jetbrains-mono);
 }
