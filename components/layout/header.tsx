@@ -1,6 +1,6 @@
 import { UserRound, Search } from 'lucide-react';
 import Image from 'next/image';
-import NavLinks from '../nav-links';
+import NavLinks from '../navigation/nav-links';
 import Link from 'next/link';
 
 export default function Header() {

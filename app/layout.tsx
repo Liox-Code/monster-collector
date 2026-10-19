@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
-import AppShell from '@/components/segments/app-shell';
+import AppShell from '@/components/layout/app-shell';
 
 const geist = Geist({
   subsets: ['latin'],
