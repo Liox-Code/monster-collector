@@ -1,6 +1,27 @@
 import { DeepNullableExceptId } from './utility';
 
-export type MonsterCardTypes = 'Fire' | 'Water' | 'Wind' | 'Stone' | 'Steel';
+export type MonsterCardTypes =
+  | 'Fire'
+  | 'Water'
+  | 'Wind'
+  | 'Stone'
+  | 'Steel'
+  | 'Dark'
+  | 'Ghost'
+  | 'Psychic'
+  | 'Spirit'
+  | 'Rock'
+  | 'Fighting'
+  | 'Flying'
+  | 'Ice'
+  | 'Ground'
+  | 'Grass'
+  | 'Electric'
+  | 'Poison'
+  | 'Light'
+  | 'Dragon'
+  | 'Time'
+  | 'Cosmic';
 
 export type MonsterCardRarity = 'Legendary' | 'Rare' | 'Normal';
 
@@ -31,7 +52,7 @@ export type MonsterSummary = {
   combatRole: string;
   description: string;
   level: string;
-  favorite: boolean;
+  favoriteCount: number;
   imageUrl: string;
   types: MonsterCardTypes[];
   rarity: MonsterCardRarity;
@@ -57,4 +78,4 @@ export type MonsterTeam = {
   state: TeamState;
 };
 
-export type NullableMonsterTeam = DeepNullableExceptId<MonsterTeam, 'teamId'>;
+export type NullableMonsterTeam = DeepNullableExceptId<MonsterTeam, 'teamId' | 'userId'>;

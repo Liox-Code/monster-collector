@@ -2,6 +2,8 @@ import { MonsterCardStats } from '@/types/monster';
 
 export const MONSTER_STAT_MAX = 250;
 
+export const MAX_FAVORITE_LIMIT = 10;
+
 export const MONSTER_STAT_LABELS: Record<keyof MonsterCardStats, string> = {
   hp: 'Health Points',
   attack: 'Attack',

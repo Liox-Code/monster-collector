@@ -26,7 +26,7 @@ export default function MonsterCard({ monsterCard }: Props) {
     combatRole: monsterCard?.combatRole ?? 'Unkwown',
     description: monsterCard?.description ?? 'Unkwown',
     level: monsterCard?.level ?? '1',
-    favorite: monsterCard?.favorite ?? false,
+    favoriteCount: monsterCard?.favoriteCount ?? 0,
     imageUrl: monsterCard?.imageUrl ?? '/unkown_monster.png',
     types: monsterCard?.types ?? [],
     rarity: monsterCard?.rarity ?? 'Legendary',
@@ -39,7 +39,7 @@ export default function MonsterCard({ monsterCard }: Props) {
   return (
     <div className="bg-surface-1 grid h-full w-full grid-flow-row gap-4 rounded-xl p-6">
       <div className="inline-flex gap-2">
-        <span className="text-primary-200 rounded bg-neutral-800 px-2 py-1 text-sm">
+        <span className="text-primary-200 flex items-center rounded bg-neutral-800 px-2 py-1 text-sm">
           {cardNumberDisplay}
         </span>
         <MonsterBadge label={defaultMonsterCard.rarity} variant={defaultMonsterCard.rarity} />

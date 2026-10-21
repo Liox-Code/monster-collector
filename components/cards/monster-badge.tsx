@@ -23,6 +23,7 @@ export default function MonsterBadge({
     : 'bg-neutral-800 text-primary-200';
 
   const badgeSize: Record<Sizes, string> = {
+    xs: 'px-2 py-1 text-xs',
     sm: 'px-2 py-1 text-base',
     md: 'px-3 py-1 text-lg',
     lg: 'px-3 py-2 text-xl',
