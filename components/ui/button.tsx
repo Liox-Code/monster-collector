@@ -1,7 +1,7 @@
 'use client';
 
 import { Sizes, Variant } from '@/types/ui';
-import { ReactNode, useEffect } from 'react';
+import { ComponentProps, ReactNode } from 'react';
 
 type Shapes = 'rectangle' | 'square';
 type SizeConfig = { rectangle: string; square: string; textSize: string };
@@ -16,6 +16,7 @@ type Props = {
   shape?: Shapes;
   size?: Sizes;
   disabled?: boolean;
+  buttonType?: ComponentProps<'button'>['type'];
   onClick?: () => void;
 };
 
@@ -29,6 +30,7 @@ export default function Button({
   shape = 'rectangle',
   size = 'md',
   disabled = false,
+  buttonType = 'button',
   onClick,
 }: Props) {
   const variants: Record<Variant, string> = {
@@ -62,6 +64,7 @@ export default function Button({
   return (
     <>
       <button
+        type={buttonType}
         className={`grid cursor-pointer auto-cols-max grid-flow-col items-center justify-center gap-2 rounded-md ${sizes[size][shape]} ${sizes[size].textSize} ${variants[variant]} ${bordered && borderStyle[variant]} ${className}`}
         onClick={onClick}
         disabled={disabled}

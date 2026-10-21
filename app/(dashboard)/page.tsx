@@ -1,4 +1,3 @@
-import MonsterTeam from '@/components/cards/monster-team';
 import FeaturedSection from '@/components/sections/featured-section';
 import HeroSection from '@/components/sections/hero-section';
 import TrendingTeamsList from '@/components/sections/trending-teams-list';

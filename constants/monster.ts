@@ -19,3 +19,11 @@ export const MONSTER_STAT_SHORT_LABELS: Record<keyof MonsterCardStats, string> =
   specialSpell: 'SP.SPL',
   speed: 'SPD',
 };
+
+export const NAV_LINKS = [
+  { label: 'Home', href: '/' },
+  { label: 'Monster', href: '/monster' },
+  { label: 'Teams', href: '/teams' },
+  { label: 'Ranking', href: '/ranking' },
+  { label: 'Dashboard', href: '/dashboard' },
+];

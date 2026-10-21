@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, JetBrains_Mono } from 'next/font/google';
-import './globals.css';
-import AppShell from '@/components/layout/app-shell';
+import '../globals.css';
+import AuthAppShell from '@/components/layout/auth-app-shell';
 
 const geist = Geist({
   subsets: ['latin'],
@@ -22,7 +22,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="en" className={`${geist.variable} ${jetbrainsMono.variable} h-full antialiased`}>
       <body className="bg-background flex min-h-full flex-col text-neutral-50">
-        <AppShell>{children}</AppShell>
+        <AuthAppShell>{children}</AuthAppShell>
       </body>
     </html>
   );
