@@ -1,5 +1,9 @@
 import { DeepNullableExceptId } from './utility';
 
+export type AllTypesFilter = 'All';
+
+export type WithEmpty<T extends string> = T | '';
+
 export type MonsterCardTypes =
   | 'Fire'
   | 'Water'
@@ -24,6 +28,7 @@ export type MonsterCardTypes =
   | 'Cosmic';
 
 export type MonsterCardRarity = 'Legendary' | 'Rare' | 'Normal';
+export type MonsterCardRarityFilter = WithEmpty<MonsterCardRarity>;
 
 export type TeamState = 'Public' | 'Private';
 
@@ -38,8 +43,11 @@ export type MonsterCardStats = {
   speed: number;
 };
 
+export type MonsterCardStatKey = keyof MonsterCardStats;
+export type MonsterCardStatFilter = Capitalize<WithEmpty<MonsterCardStatKey>>;
+
 export type MonsterCardStatsDisplay = {
-  key: keyof MonsterCardStats;
+  key: MonsterCardStatKey;
   label: string;
   shortLabel: string;
   value: number;

@@ -1,9 +1,9 @@
 import { MONSTER_STAT_LABELS, MONSTER_STAT_SHORT_LABELS } from '@/constants/monster';
-import { MonsterCardStats, MonsterCardStatsDisplay } from '@/types/monster';
+import { MonsterCardStatKey, MonsterCardStats, MonsterCardStatsDisplay } from '@/types/monster';
 
 export function getMonsterStatsDisplay(monsterStats: MonsterCardStats): MonsterCardStatsDisplay[] {
   const monsterCardStatsDisplay = Object.entries(monsterStats).map(([key, value]) => {
-    const statKey = key as keyof MonsterCardStats;
+    const statKey = key as MonsterCardStatKey;
 
     return {
       key: statKey,

@@ -13,7 +13,7 @@ export default function AppShell({ children }: Props) {
         <Header />
       </div>
       <div className="flex min-w-0 flex-col gap-20 px-20 py-20">{children}</div>
-      <div className="bg-footer min-h-20 w-full px-20 py-4 ring-1 ring-neutral-50/10">
+      <div className="bg-surface-3 min-h-20 w-full px-20 py-4 ring-1 ring-neutral-50/10">
         <Footer />
       </div>
     </div>

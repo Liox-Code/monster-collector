@@ -36,14 +36,26 @@ export default function Button({
   const variants: Record<Variant, string> = {
     primary: 'bg-primary-500 text-neutral-900',
     secondary: 'bg-neutral-900 text-neutral-50',
+    tertiary: 'bg-neutral-800 text-neutral-50',
   };
 
   const borderStyle: Record<Variant, string> = {
     primary: '',
     secondary: 'ring-primary-300/30  ring-1',
+    tertiary: '',
   };
 
   const sizes: Record<Sizes, SizeConfig> = {
+    auto: {
+      rectangle: 'h-full w-full',
+      square: 'h-full w-full',
+      textSize: 'text-xl',
+    },
+    xs: {
+      rectangle: 'px-1 h-6',
+      square: 'aspect-square w-8 h-8',
+      textSize: 'text-sm',
+    },
     sm: {
       rectangle: 'px-3 h-8',
       square: 'aspect-square w-9 h-9',

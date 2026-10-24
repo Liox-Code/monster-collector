@@ -13,7 +13,5 @@ export async function GET(request: NextRequest) {
           .slice(0, MAX_FAVORITE_LIMIT)
       : monsterTeams;
 
-  console.log('filteredMonsterCards', filteredMonsterCards);
-
   return NextResponse.json(filteredMonsterCards);
 }
