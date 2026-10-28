@@ -1,15 +1,11 @@
-import {
-  AllTypesFilter,
-  MonsterCardRarityFilter,
-  MonsterCardStatFilter,
-  MonsterCardStatKey,
-  MonsterCardTypes,
-} from '@/types/monster';
+import { MonsterCardRarity } from '@/lib/schemas/monster';
+import { MonsterCardStatKey } from '@/types/monster';
 import { Option } from '@/types/ui';
 
 export const MONSTER_STAT_MAX = 250;
 
 export const MAX_FAVORITE_LIMIT = 10;
+export const MAX_MONSTERS_PER_PAGE = 16;
 
 export const MONSTER_STAT_LABELS: Record<MonsterCardStatKey, string> = {
   hp: 'Health Points',
@@ -37,76 +33,44 @@ export const NAV_LINKS = [
   { label: 'Dashboard', href: '/dashboard' },
 ];
 
-export const ALL_TYPE_FILTER: AllTypesFilter = 'All';
-
-export const MONSTER_TYPES: (MonsterCardTypes | AllTypesFilter)[] = [
-  ALL_TYPE_FILTER,
-  'Fire',
-  'Water',
-  'Wind',
-  'Stone',
-  'Steel',
-  'Dark',
-  'Ghost',
-  'Psychic',
-  'Spirit',
-  'Rock',
-  'Fighting',
-  'Flying',
-  'Ice',
-  'Ground',
-  'Grass',
-  'Electric',
-  'Poison',
-  'Light',
-  'Dragon',
-  'Time',
-  'Cosmic',
-];
-
-export const MONSTER_RARITY: Option<MonsterCardRarityFilter>[] = [
+export const MONSTER_RARITY: Option<MonsterCardRarity>[] = [
   {
-    value: '',
-    label: 'All rarity',
-  },
-  {
-    value: 'Legendary',
+    value: 'legendary',
     label: 'Legendary',
   },
   {
-    value: 'Rare',
+    value: 'rare',
     label: 'Rare',
   },
   {
-    value: 'Normal',
+    value: 'normal',
     label: 'Normal',
   },
 ];
 
-export const MONSTER_STATS_SORT: Option<MonsterCardStatFilter>[] = [
-  { value: '', label: 'Any stat' },
+export const MONSTER_STATS_SORT: Option<MonsterCardStatKey>[] = [
   {
-    value: 'Hp',
+    value: 'hp',
     label: 'Hp',
   },
   {
-    value: 'Attack',
+    value: 'attack',
     label: 'Attack',
   },
   {
-    value: 'Defense',
+    value: 'defense',
     label: 'Defense',
   },
   {
-    value: 'SpecialAttack',
+    value: 'specialAttack',
     label: 'SpecialAttack',
   },
   {
-    value: 'SpecialSpell',
+    value: 'specialSpell',
     label: 'SpecialSpell',
   },
   {
-    value: 'Speed',
+    value: 'speed',
     label: 'Speed',
   },
 ];

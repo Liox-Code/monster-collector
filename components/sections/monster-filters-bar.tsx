@@ -2,61 +2,53 @@
 
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import TypeFilterList from './monster-filters/type-filter-list';
-import { ALL_TYPE_FILTER, MONSTER_RARITY, MONSTER_STATS_SORT } from '@/constants/monster';
+import { MONSTER_RARITY, MONSTER_STATS_SORT } from '@/constants/monster';
 import CustomSelect from '../ui/custom-select';
-import { MonsterCardRarityFilter, MonsterCardStatFilter } from '@/types/monster';
 import { ArrowUpDown, ChevronDown, RefreshCcw } from 'lucide-react';
 import Button from '../ui/button';
 import SearchInputField from '../ui/search-input-field';
+import { type MonsterFilters } from '@/lib/schemas/monster';
 
-export default function MonsterFiltersBar() {
+type MonsterFilterBarProps = Pick<MonsterFilters, 'type' | 'rarity' | 'stat'>;
+
+export default function MonsterFiltersBar({
+  type: selectedTypes,
+  rarity: selectedRarity,
+  stat: selectedStat,
+}: MonsterFilterBarProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { replace } = useRouter();
 
-  const selectedTypes = searchParams.getAll('type');
-  const selectedRarity = searchParams.get('rarity') as MonsterCardRarityFilter;
-  const selectedStat = searchParams.get('stat') as MonsterCardStatFilter;
-
-  const handleToggle = (types: string[]) => {
-    const allFilteredSelected = types.includes(ALL_TYPE_FILTER.toLowerCase());
+  const updateParams = (mutate: (params: URLSearchParams) => void) => {
     const newParams = new URLSearchParams(searchParams);
 
-    newParams.delete('type');
+    mutate(newParams);
 
-    if (!allFilteredSelected) {
-      types.forEach((type) => newParams.append('type', type));
-    }
+    newParams.delete('page');
 
-    if (allFilteredSelected) {
-      newParams.append('type', ALL_TYPE_FILTER.toLowerCase());
-    }
-
-    replace(`${pathname}?${newParams.toString()}`);
+    const query = newParams.toString();
+    replace(query ? `${pathname}?${query}` : pathname);
   };
 
-  const handleRarity = (rarity: MonsterCardRarityFilter) => {
-    const newParams = new URLSearchParams(searchParams);
+  const handleTypes = (types: string[]) => {
+    updateParams((params) => {
+      params.delete('type');
 
-    if (rarity) {
-      newParams.set('rarity', rarity);
-    } else {
-      newParams.delete('rarity');
-    }
-
-    replace(`${pathname}?${newParams.toString()}`);
+      types.forEach((type) => {
+        params.append('type', type);
+      });
+    });
   };
 
-  const handleStat = (stat: Capitalize<MonsterCardStatFilter>) => {
-    const newParams = new URLSearchParams(searchParams);
-
-    if (stat) {
-      newParams.set('stat', stat);
-    } else {
-      newParams.delete('stat');
-    }
-
-    replace(`${pathname}?${newParams.toString()}`);
+  const setParam = (key: 'stat' | 'rarity', value: string | null) => {
+    updateParams((params) => {
+      if (value) {
+        params.set(key, value);
+      } else {
+        params.delete(key);
+      }
+    });
   };
 
   return (
@@ -67,26 +59,35 @@ export default function MonsterFiltersBar() {
           <CustomSelect
             options={MONSTER_RARITY}
             value={selectedRarity}
-            onChange={handleRarity}
+            onChange={(value) => {
+              setParam('rarity', value);
+            }}
             placeholder="Select rarity..."
             iconType={<ChevronDown />}
+            resetLabel="All rarities"
           />
           <CustomSelect
             options={MONSTER_STATS_SORT}
             value={selectedStat}
-            onChange={handleStat}
-            placeholder="Select rarity..."
+            onChange={(value) => {
+              setParam('stat', value);
+            }}
+            placeholder="Select stat..."
             iconType={<ArrowUpDown />}
+            resetLabel="Any stat"
           />
           <Button
             startIcon={<RefreshCcw className="text-tertiary-400 size-5" />}
             label="Reset"
             variant="tertiary"
             size="auto"
+            onClick={() => {
+              replace(pathname);
+            }}
           />
         </div>
       </div>
-      <TypeFilterList selectedTypes={selectedTypes} onTypeChange={handleToggle} />
+      <TypeFilterList selectedTypes={selectedTypes} onTypeChange={handleTypes} />
     </div>
   );
 }

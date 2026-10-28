@@ -5,16 +5,27 @@ import { Option } from '@/types/ui';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react';
 import { ReactNode } from 'react';
 
-type CustomSelectProps<T extends string = string> = {
-  value?: T;
-  onChange: (value: T) => void;
+const RESET_VALUE = '__reset__';
+
+type BaseProps<T extends string> = {
   options: Option<T>[];
   placeholder?: string;
   iconType?: ReactNode;
   disabled?: boolean;
   name?: string;
   ariaLabel?: string;
+  value?: T;
 };
+
+type CustomSelectProps<T extends string = string> =
+  | (BaseProps<T> & {
+      resetLabel: string;
+      onChange: (value: T | null) => void;
+    })
+  | (BaseProps<T> & {
+      resetLabel?: undefined;
+      onChange: (value: T) => void;
+    });
 
 export default function CustomSelect<T extends string = string>({
   value,
@@ -25,14 +36,31 @@ export default function CustomSelect<T extends string = string>({
   disabled,
   name,
   ariaLabel,
+  resetLabel,
 }: CustomSelectProps<T>) {
-  const safeValue = value ?? '';
+  const items: Option<string>[] =
+    resetLabel === undefined ? options : [{ label: resetLabel, value: RESET_VALUE }, ...options];
+
+  const safeValue = value ?? (resetLabel === undefined ? '' : RESET_VALUE);
+
+  function handleValueChange(nextValue: string) {
+    if (resetLabel === undefined) {
+      onChange(nextValue as T);
+    } else {
+      onChange(nextValue === RESET_VALUE ? null : (nextValue as T));
+    }
+  }
 
   const scrollButtonClass =
     'text-primary-300 flex h-6 items-center justify-center pointer-events-none';
 
   return (
-    <Select.Root value={safeValue} onValueChange={onChange} disabled={disabled} name={name}>
+    <Select.Root
+      value={safeValue}
+      onValueChange={handleValueChange}
+      disabled={disabled}
+      name={name}
+    >
       <Select.Trigger
         aria-label={ariaLabel}
         className="bg-surface-3 [&>span]:text-primary-200 grid h-full min-h-12 w-full min-w-40 cursor-pointer grid-cols-[1fr_auto] items-center gap-2 rounded-lg px-4 focus:outline-none [&>span]:text-left [&>span]:text-xl"
@@ -50,7 +78,7 @@ export default function CustomSelect<T extends string = string>({
             <ChevronUp className="size-6" />
           </Select.ScrollUpButton>
           <Select.Viewport className="max-h-[min(13rem,var(--radix-select-content-available-height))] w-full">
-            {options.map((option) => (
+            {items.map((option) => (
               <Select.Item
                 key={option.value}
                 value={option.value}

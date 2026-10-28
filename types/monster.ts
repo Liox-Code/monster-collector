@@ -1,36 +1,8 @@
+import { MonsterCardRarity, MonsterCardTypes } from '@/lib/schemas/monster';
 import { DeepNullableExceptId } from './utility';
+import { LucideIcon } from 'lucide-react';
 
-export type AllTypesFilter = 'All';
-
-export type WithEmpty<T extends string> = T | '';
-
-export type MonsterCardTypes =
-  | 'Fire'
-  | 'Water'
-  | 'Wind'
-  | 'Stone'
-  | 'Steel'
-  | 'Dark'
-  | 'Ghost'
-  | 'Psychic'
-  | 'Spirit'
-  | 'Rock'
-  | 'Fighting'
-  | 'Flying'
-  | 'Ice'
-  | 'Ground'
-  | 'Grass'
-  | 'Electric'
-  | 'Poison'
-  | 'Light'
-  | 'Dragon'
-  | 'Time'
-  | 'Cosmic';
-
-export type MonsterCardRarity = 'Legendary' | 'Rare' | 'Normal';
-export type MonsterCardRarityFilter = WithEmpty<MonsterCardRarity>;
-
-export type TeamState = 'Public' | 'Private';
+export type TeamState = 'public' | 'private';
 
 export type MonsterBadgeLabel = MonsterCardTypes | MonsterCardRarity | TeamState;
 
@@ -44,7 +16,6 @@ export type MonsterCardStats = {
 };
 
 export type MonsterCardStatKey = keyof MonsterCardStats;
-export type MonsterCardStatFilter = Capitalize<WithEmpty<MonsterCardStatKey>>;
 
 export type MonsterCardStatsDisplay = {
   key: MonsterCardStatKey;
@@ -87,3 +58,18 @@ export type MonsterTeam = {
 };
 
 export type NullableMonsterTeam = DeepNullableExceptId<MonsterTeam, 'teamId' | 'userId'>;
+
+export type BaseBadgeConfig = {
+  label: string;
+  className: string;
+};
+
+export type MonsterTypeConfig = BaseBadgeConfig & {
+  icon: LucideIcon;
+};
+
+export type MonsterTypeResponse<T> = {
+  totalPages: number;
+  totalMonsters: number;
+  data: T;
+};

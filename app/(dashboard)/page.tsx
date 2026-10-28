@@ -1,10 +1,14 @@
+import { fetchWithParams } from '@/lib/fetch-with-params';
 import FeaturedSection from '@/components/sections/featured-section';
 import HeroSection from '@/components/sections/hero-section';
 import MetricList from '@/components/sections/metric-list';
 import TrendingTeamsList from '@/components/sections/trending-teams-list';
 import Button from '@/components/ui/button';
-import { API_BASE_URL } from '@/config/constants';
-import type { MonsterSummary, NullableMonsterTeam } from '@/types/monster';
+import type {
+  MonsterTypeResponse,
+  NullableMonsterCard,
+  NullableMonsterTeam,
+} from '@/types/monster';
 import { ArrowRight } from 'lucide-react';
 
 const metrics = [
@@ -14,20 +18,22 @@ const metrics = [
 ];
 
 export default async function Home() {
-  async function getFavoriteMonsters(): Promise<MonsterSummary[]> {
-    const res = await fetch(`${API_BASE_URL}/api/monster-cards?favorite=true`);
+  async function getFavoriteMonsters(): Promise<NullableMonsterCard[]> {
+    const response = await fetchWithParams<MonsterTypeResponse<NullableMonsterCard[]>>(
+      '/api/monster-cards',
+      'favorite=true'
+    );
 
-    if (!res.ok) throw new Error('Failed to fetch monsters.');
-
-    return await res.json();
+    return response.data;
   }
 
   async function getMonsterTeams(): Promise<NullableMonsterTeam[]> {
-    const res = await fetch(`${API_BASE_URL}/api/monster-teams?favorite=true`);
+    const response = await fetchWithParams<NullableMonsterTeam[]>(
+      '/api/monster-teams',
+      'favorite=true'
+    );
 
-    if (!res.ok) throw new Error('Failed to fetch monsters.');
-
-    return await res.json();
+    return response;
   }
 
   const monsterCardsTest = await getFavoriteMonsters();

@@ -6,7 +6,7 @@ import { ComponentProps, ReactNode } from 'react';
 type Shapes = 'rectangle' | 'square';
 type SizeConfig = { rectangle: string; square: string; textSize: string };
 
-type Props = {
+export type ButtonProps = {
   label?: string;
   variant?: Variant;
   bordered?: boolean;
@@ -32,7 +32,7 @@ export default function Button({
   disabled = false,
   buttonType = 'button',
   onClick,
-}: Props) {
+}: ButtonProps) {
   const variants: Record<Variant, string> = {
     primary: 'bg-primary-500 text-neutral-900',
     secondary: 'bg-neutral-900 text-neutral-50',
@@ -48,7 +48,7 @@ export default function Button({
   const sizes: Record<Sizes, SizeConfig> = {
     auto: {
       rectangle: 'h-full w-full',
-      square: 'h-full w-full',
+      square: 'aspect-square h-full w-full',
       textSize: 'text-xl',
     },
     xs: {

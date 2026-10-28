@@ -1,6 +1,6 @@
 'use client';
 
-import { MonsterSummary } from '@/types/monster';
+import { NullableMonsterCard } from '@/types/monster';
 import MonsterCard from '../cards/monster-card';
 import SectionHeader from './section-header';
 import useEmblaCarousel from 'embla-carousel-react';
@@ -8,7 +8,7 @@ import { useCallback, useEffect, useState } from 'react';
 import DotPagination from '../ui/dot-pagination';
 
 type Props = {
-  monstersSummary: MonsterSummary[];
+  monstersSummary: NullableMonsterCard[];
 };
 
 export default function FeaturedSection({ monstersSummary }: Props) {

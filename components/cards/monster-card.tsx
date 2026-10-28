@@ -29,7 +29,7 @@ export default function MonsterCard({ monsterCard }: Props) {
     favoriteCount: monsterCard?.favoriteCount ?? 0,
     imageUrl: monsterCard?.imageUrl ?? '/unkown_monster.png',
     types: monsterCard?.types ?? [],
-    rarity: monsterCard?.rarity ?? 'Legendary',
+    rarity: monsterCard?.rarity ?? 'normal',
     stats: defaultMonsterStats,
   };
 

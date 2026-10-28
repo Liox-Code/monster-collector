@@ -16,13 +16,13 @@ export default function MonsterBadge({
   label,
   variant,
   size = 'sm',
-  iconClassName,
+  iconClassName = '',
 }: Props) {
-  const defaultClassname = variant
-    ? MONSTER_BADGE_STYLE[variant]
-    : 'bg-neutral-800 text-primary-200';
+  const defaultClassname =
+    (variant && MONSTER_BADGE_STYLE[variant].className) ?? 'bg-neutral-800 text-primary-200';
 
   const badgeSize: Record<Sizes, string> = {
+    auto: 'w-full h-full',
     xs: 'px-2 py-1 text-xs',
     sm: 'px-2 py-1 text-base',
     md: 'px-3 py-1 text-lg',
