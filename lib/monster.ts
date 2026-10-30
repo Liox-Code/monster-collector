@@ -27,6 +27,7 @@ export function parseMonsterFilters(params: URLSearchParams): MonsterFilters {
     rarity: params.get('rarity'),
     page: params.get('page'),
     stat: params.get('stat'),
+    search: params.get('search'),
   });
 
   return monsterFilters;
@@ -43,6 +44,9 @@ export function buildMonsterQuery(filters: MonsterFilters): URLSearchParams {
   }
   if (filters.stat) {
     params.set('stat', filters.stat);
+  }
+  if (filters.search) {
+    params.set('search', filters.search);
   }
   params.set('page', String(filters.page));
 

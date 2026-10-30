@@ -43,6 +43,7 @@ export default async function Monster({ searchParams }: MonsterTypes) {
         type={monsterFilters.type}
         stat={monsterFilters.stat}
         rarity={monsterFilters.rarity}
+        search={monsterFilters.search}
       />
       <MonsterCardGrid monsterCards={monsters.data} />
       <MonsterPaginationBar page={monsterFilters.page} totalPages={monsters.totalPages} />

@@ -51,6 +51,7 @@ export const monsterFilterSchema = z.object({
   page: z.coerce.number().int().min(1).max(500).catch(1),
   stat: monsterCardStats.optional().catch(undefined),
   favorite: z.boolean().optional().catch(false),
+  search: z.string().optional().catch(''),
 });
 
 export type MonsterFilters = z.infer<typeof monsterFilterSchema>;

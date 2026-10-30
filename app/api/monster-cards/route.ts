@@ -3,36 +3,46 @@ import { monsterCardsTest } from '../data/monster';
 import { MAX_FAVORITE_LIMIT, MAX_MONSTERS_PER_PAGE } from '@/constants/monster';
 import { parseMonsterFilters } from '@/lib/monster';
 import { MonsterFilters } from '@/lib/schemas/monster';
+import { MonsterSummary } from '@/types/monster';
+
+const normalize = (value: string) =>
+  value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
 
 export function filterMonsters(filters: MonsterFilters) {
-  const { type, favorite, rarity, stat } = filters;
+  const { type, favorite, rarity, stat, search }: MonsterFilters = filters;
 
-  let filteredMonsterCards = monsterCardsTest;
+  const predicates: Array<(monsterCard: MonsterSummary) => boolean> = [];
 
-  filteredMonsterCards = favorite
-    ? filteredMonsterCards
-        .sort((a, b) => b.favoriteCount - a.favoriteCount)
-        .slice(0, MAX_FAVORITE_LIMIT)
-    : filteredMonsterCards;
+  const searchText = search ? normalize(search) : '';
+  if (searchText) {
+    predicates.push(
+      (monsterCard) =>
+        normalize(monsterCard.monsterName).includes(searchText) ||
+        normalize(monsterCard.description).includes(searchText) ||
+        normalize(monsterCard.combatRole).includes(searchText)
+    );
+  }
+  if (rarity) predicates.push((monsterCard) => monsterCard.rarity === rarity);
+  if (type.length >= 1)
+    predicates.push((monsterCard) => type.some((type) => monsterCard.types.includes(type)));
 
-  filteredMonsterCards = rarity
-    ? filteredMonsterCards.filter((monsterCard) => {
-        return monsterCard.rarity === rarity;
-      })
-    : filteredMonsterCards;
+  let result = [...monsterCardsTest];
 
-  filteredMonsterCards = stat
-    ? filteredMonsterCards.sort((a, b) => b.stats[stat] - a.stats[stat])
-    : filteredMonsterCards;
+  if (predicates.length >= 1)
+    result = result.filter((monsterCard) =>
+      predicates.every((predicate) => predicate(monsterCard))
+    );
 
-  filteredMonsterCards =
-    type.length >= 1
-      ? filteredMonsterCards.filter((monsterCard) => {
-          return type.some((type) => monsterCard.types.includes(type));
-        })
-      : filteredMonsterCards;
+  if (favorite)
+    result = result.sort((a, b) => a.favoriteCount - b.favoriteCount).slice(0, MAX_FAVORITE_LIMIT);
 
-  return filteredMonsterCards;
+  if (stat) result = result.sort((a, b) => a.stats[stat] - b.stats[stat]);
+
+  return result;
 }
 
 export async function GET(request: NextRequest) {
@@ -44,7 +54,7 @@ export async function GET(request: NextRequest) {
   const totalMonsters = monsters.length;
   const totalPages = Math.ceil(totalMonsters / MAX_MONSTERS_PER_PAGE);
   const startPage = (filters.page - 1) * MAX_MONSTERS_PER_PAGE;
-  const endPage = startPage + MAX_MONSTERS_PER_PAGE;
+  const endPage = filters.page * MAX_MONSTERS_PER_PAGE;
 
   const result = {
     totalPages: totalPages,

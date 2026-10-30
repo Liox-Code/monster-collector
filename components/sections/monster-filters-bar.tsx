@@ -8,13 +8,15 @@ import { ArrowUpDown, ChevronDown, RefreshCcw } from 'lucide-react';
 import Button from '../ui/button';
 import SearchInputField from '../ui/search-input-field';
 import { type MonsterFilters } from '@/lib/schemas/monster';
+import { useDebouncedInput } from '@/hooks/useDebouncedInput';
 
-type MonsterFilterBarProps = Pick<MonsterFilters, 'type' | 'rarity' | 'stat'>;
+type MonsterFilterBarProps = Pick<MonsterFilters, 'type' | 'rarity' | 'stat' | 'search'>;
 
 export default function MonsterFiltersBar({
   type: selectedTypes,
   rarity: selectedRarity,
   stat: selectedStat,
+  search,
 }: MonsterFilterBarProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -41,7 +43,7 @@ export default function MonsterFiltersBar({
     });
   };
 
-  const setParam = (key: 'stat' | 'rarity', value: string | null) => {
+  const setParam = (key: 'stat' | 'rarity' | 'search', value: string | null) => {
     updateParams((params) => {
       if (value) {
         params.set(key, value);
@@ -51,10 +53,21 @@ export default function MonsterFiltersBar({
     });
   };
 
+  const serachDebounced = useDebouncedInput({
+    urlSearchValue: search ?? '',
+    callback: (paramValue: string) => {
+      setParam('search', paramValue);
+    },
+  });
+
   return (
     <div className="bg-surface-1 flex flex-col items-start justify-start gap-8 rounded-xl p-6">
       <div className="grid h-10 w-full grid-cols-[40rem_auto] justify-between gap-2">
-        <SearchInputField placeholder="Search monsters..." />
+        <SearchInputField
+          onChange={serachDebounced.onChange}
+          value={serachDebounced.text}
+          placeholder="Search monsters..."
+        />
         <div className="grid grid-flow-col grid-cols-[14rem_14rem_8rem] gap-4">
           <CustomSelect
             options={MONSTER_RARITY}
@@ -82,6 +95,7 @@ export default function MonsterFiltersBar({
             variant="tertiary"
             size="auto"
             onClick={() => {
+              serachDebounced.reset();
               replace(pathname);
             }}
           />
